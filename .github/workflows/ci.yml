@@ -5,6 +5,7 @@ on:
     branches: [ main, master, develop ]
   pull_request:
     branches: [ main, master, develop ]
+  workflow_dispatch:  # Позволяет запускать вручную
 
 jobs:
   build-and-test:
@@ -28,17 +29,28 @@ jobs:
       continue-on-error: true
       
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
       continue-on-error: true
       env:
         # Переменные окружения для тестов без Revit
         REVIT_API_PATH: "C:\Program Files\Autodesk\Revit 2025"
         
-    - name: Upload test results
+    - name: Publish test results
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      with:
+        files: '**/*.trx'
+        check_name: 'Test Results'
+        comment_mode: 'create new'
+        report_individual_runs: true
+        
+    - name: Upload test results as artifact
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: '**/TestResults/**/*'
+        path: |
+          **/TestResults/**/*
+          **/coverage.cobertura.xml
         retention-days: 30
 
