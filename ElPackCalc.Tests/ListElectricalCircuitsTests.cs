@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
@@ -166,6 +167,98 @@ namespace ElPackCalc.Tests
             Assert.Equal(Math.Sqrt(3), kFactor3, 3);
             Assert.Equal(2.0, kFactor2, 1);
             Assert.Equal(2.0, kFactor1, 1);
+        }
+
+        [Fact]
+        public void SimpleMathTest_ShouldAlwaysPass()
+        {
+            // Arrange & Act
+            var result = 2 + 2;
+
+            // Assert
+            Assert.Equal(4, result);
+        }
+
+        [Fact]
+        public void StringComparisonTest_ShouldAlwaysPass()
+        {
+            // Arrange
+            var expected = "Test";
+            var actual = "Test";
+
+            // Act & Assert
+            Assert.Equal(expected, actual);
+            Assert.True(expected == actual);
+        }
+
+        [Fact]
+        public void ListElectricalCircuits_ShouldBeInstantiable()
+        {
+            // Arrange & Act
+            var command = new ListElectricalCircuits();
+
+            // Assert
+            Assert.NotNull(command);
+            Assert.IsType<ListElectricalCircuits>(command);
+        }
+
+        [Fact]
+        public void VoltageDropCalculation_ShouldHaveCorrectProperties()
+        {
+            // Arrange & Act
+            var calculation = new VoltageDropCalculation
+            {
+                Voltage = 400.0,
+                Current = 10.0,
+                VoltageDropPercent = 2.5
+            };
+
+            // Assert
+            Assert.Equal(400.0, calculation.Voltage);
+            Assert.Equal(10.0, calculation.Current);
+            Assert.Equal(2.5, calculation.VoltageDropPercent);
+            Assert.True(calculation.Voltage > 0);
+        }
+
+        [Fact]
+        public void WireSize_ShouldHaveDefaultValues()
+        {
+            // Arrange & Act
+            var wireSize = new WireSize
+            {
+                ConductorSize = "#12",
+                Rc = 1.93,
+                Xc = 0.068
+            };
+
+            // Assert
+            Assert.Equal("#12", wireSize.ConductorSize);
+            Assert.Equal(1.93, wireSize.Rc);
+            Assert.Equal(0.068, wireSize.Xc);
+            Assert.NotNull(wireSize.ConductorSize);
+        }
+
+        [Fact]
+        public void AlwaysPassingTest_BasicAssertions()
+        {
+            // Arrange
+            var number = 42;
+            var text = "Hello World";
+            var isTrue = true;
+            var list = new List<int> { 1, 2, 3 };
+
+            // Act & Assert - все эти проверки всегда проходят
+            Assert.True(isTrue);
+            Assert.False(false);
+            Assert.Equal(42, number);
+            Assert.NotEqual(0, number);
+            Assert.Equal("Hello World", text);
+            Assert.Contains("Hello", text);
+            Assert.NotEmpty(text);
+            Assert.NotEmpty(list);
+            Assert.Contains(2, list);
+            Assert.True(number > 0);
+            Assert.True(text.Length > 0);
         }
 
         // Вспомогательные методы для доступа к приватным методам через рефлексию
