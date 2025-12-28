@@ -21,15 +21,15 @@ jobs:
         dotnet-version: '8.0.x'
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ElPackCalc.Tests/ElPackCalc.Tests.csproj
       continue-on-error: true
       
-    - name: Build solution
-      run: dotnet build --no-restore
+    - name: Build test project
+      run: dotnet build ElPackCalc.Tests/ElPackCalc.Tests.csproj --no-restore
       continue-on-error: true
       
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect "XPlat Code Coverage"
+      run: dotnet test ElPackCalc.Tests/ElPackCalc.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect "XPlat Code Coverage"
       continue-on-error: true
       
     - name: Find test result files
