@@ -24,12 +24,8 @@ jobs:
       run: dotnet restore ElPackCalc.Tests/ElPackCalc.Tests.csproj
       continue-on-error: true
       
-    - name: Build test project (ignore Revit API errors)
-      run: dotnet build ElPackCalc.Tests/ElPackCalc.Tests.csproj --no-restore /p:WarningLevel=0 /p:TreatWarningsAsErrors=false
-      continue-on-error: true
-      
-    - name: Run tests
-      run: dotnet test ElPackCalc.Tests/ElPackCalc.Tests.csproj --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect "XPlat Code Coverage" --no-build
+    - name: Run tests (build and test)
+      run: dotnet test ElPackCalc.Tests/ElPackCalc.Tests.csproj --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect "XPlat Code Coverage"
       continue-on-error: true
       
     - name: Find test result files
@@ -48,6 +44,7 @@ jobs:
         reporter: dotnet-trx
         fail-on-error: false
         fail-on-empty: false
+        max-annotations: 50
         
     - name: Upload test results as artifact
       if: always()
