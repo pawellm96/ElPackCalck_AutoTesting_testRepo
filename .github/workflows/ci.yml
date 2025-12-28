@@ -31,9 +31,6 @@ jobs:
     - name: Run tests
       run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect "XPlat Code Coverage"
       continue-on-error: true
-      env:
-        # Переменные окружения для тестов без Revit
-        REVIT_API_PATH: "C:/Program Files/Autodesk/Revit 2025"
         
     - name: Publish test results
       if: always()
