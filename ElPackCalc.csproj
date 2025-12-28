@@ -21,4 +21,11 @@
     </Reference>
   </ItemGroup>
 
+  <!-- Исключить тестовые файлы из основного проекта -->
+  <ItemGroup>
+    <Compile Remove="ElPackCalc.Tests\**" />
+    <EmbeddedResource Remove="ElPackCalc.Tests\**" />
+    <None Remove="ElPackCalc.Tests\**" />
+  </ItemGroup>
+
 </Project>
