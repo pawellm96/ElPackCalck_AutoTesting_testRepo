@@ -24,7 +24,7 @@
     <ProjectReference Include="..\ElPackCalc.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="Exists('C:\Program Files\Autodesk\Revit 2025\RevitAPI.dll')">
     <Reference Include="RevitAPI">
       <HintPath>C:\Program Files\Autodesk\Revit 2025\RevitAPI.dll</HintPath>
       <Private>false</Private>
@@ -36,4 +36,5 @@
   </ItemGroup>
 
 </Project>
+
 
